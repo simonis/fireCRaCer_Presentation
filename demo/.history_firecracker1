@@ -1,0 +1,2 @@
+firecracker --api-sock fc.sock --log-path fc.log
+touch fc.log

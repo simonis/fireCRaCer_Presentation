@@ -529,10 +529,17 @@ pre.after.small::after {
           <ul>
             <li>Minimalistic virtual machine monitor (VMM)</li>
             <li>KVM backed</li>
-            <li>Limited device support: block/network (virtio), serial</li>
+            <li>Limited devices:
+              block/<a href="https://github.com/firecracker-microvm/firecracker/blob/main/docs/network-setup.md">network</a>
+              (virtio),
+              <a href="https://github.com/firecracker-microvm/firecracker/blob/main/docs/vsock.md">vsock</a>, serial</li>
             <li>REST-based configuration</li>
             <li>Written in Rust (based on <a href="https://chromium.googlesource.com/chromiumos/platform/crosvm/">crosvm</a>,
               now <a href="https://github.com/rust-vmm">rust-vmm</a>)</li>
+            <li><a href="https://github.com/firecracker-microvm/firecracker/blob/main/docs/mmds/mmds-user-guide.md">
+              MicroVM-Metadata Service</a> (JSON/IMDS)</li>
+            <li><a href="https://github.com/firecracker-microvm/firecracker/blob/main/docs/jailer.md">Sandboxing</a>
+              (cgroup, chroot, seccomp)</li>
             <li>Apache 2 licensed</li>
           </ul>
         </section>
@@ -541,6 +548,11 @@ pre.after.small::after {
 
           <object data="images/Firecracker.svg"
                   type="image/svg+xml" style="width: 90%;">&nbsp;</object>
+
+        </section>
+
+        <section data-background="images/background_default.jpg">
+          <h1>Firecracker Demo</h1>
 
         </section>
 
