@@ -13,6 +13,11 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 export PATH=/priv/simonisv/Git/fireCRaCer:/share/software/Java/corretto-17/bin:$PATH
+# Need a new version of 'kill' which can pass integer value with the signal using sigqueue
+# See: https://gitlab.com/procps-ng/procps/-/merge_requests/32
+export PATH=/share/software/procps-master_bin/bin:$PATH
+# Disable the bash builtin 'kill'
+enable -n kill
 export FC=/priv/simonisv/Git/fireCRaCer/deps
 alias la='ls -la'
 
@@ -24,9 +29,13 @@ if [ "$1" == "firecracker1" ]; then
 :
 else
 if [ "$1" == "firecracker2" ]; then
-DIR="firecracker1"
+  DIR="firecracker1"
 else
-if [ "$1" == "crac" ]; then
+if [ "$1" == "crac1" ]; then
+  export CONSOLE_LOG_PATTERN="%clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"
+  # export _JAVA_OPTIONS="-XX:+UnlockDiagnosticVMOptions -XX:+UnlockExperimentalVMOptions -Dlogging.level.org.apache.catalina.authenticator.AuthenticatorBase=DEBUG"
+else
+if [ "$1" == "crac2" ]; then
 :
 else
 if [ "$1" == "firecracer" ]; then
@@ -47,12 +56,16 @@ fi
 fi
 fi
 fi
+fi
 
 if [ "$1" != "firecracker2" ]; then
   rm -rf /tmp/_$DIR
 fi
 mkdir -p /tmp/_$DIR
 cd /tmp/_$DIR
+if [ "$1" != "firecracker2" ]; then
+  truncate -s 0 fc.log && rm -rf fc.sock
+fi
 
 # See https://unix.stackexchange.com/questions/353386/when-is-a-multiline-history-entry-aka-lithist-in-bash-possible
 # for why we need bash 5+ for multiline commands in the bash history file.

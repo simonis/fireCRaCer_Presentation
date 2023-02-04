@@ -1,0 +1,3 @@
+kill -q 1 -SIGRTMIN+2 `pgrep -f spring`
+curl -s -o /dev/null -L -w ''%{http_code}'\n' localhost:8080
+jcmd `pgrep -f spring` JDK.checkpoint

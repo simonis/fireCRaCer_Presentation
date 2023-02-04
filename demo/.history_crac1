@@ -1,0 +1,19 @@
+#1
+$FC/jdk/bin/java -XX:CRaCCheckpointTo=crac \
+                   -XX:+UnlockExperimentalVMOptions -XX:-CRDoThrowCheckpointException \
+		   -XX:+UnlockDiagnosticVMOptions -XX:+CRPrintResourcesOnCheckpoint \
+                   -XX:CREngine=$FC/jdk/lib/pauseengine \
+		   -jar $FC/spring-petclinic-2.7.3.jar
+#1
+$FC/jdk/bin/java -XX:CRaCRestoreFrom=crac
+#1
+$FC/jdk/bin/java -XX:CRaCCheckpointTo=crac \
+                   -XX:+UnlockExperimentalVMOptions -XX:-CRDoThrowCheckpointException \
+		   -XX:+UnlockDiagnosticVMOptions -XX:+CRPrintResourcesOnCheckpoint \
+		   -jar $FC/spring-petclinic-2.7.3.jar
+#1
+rm -rf ./crac
+#1
+$FC/jdk/bin/java -XX:CRaCCheckpointTo=crac -jar $FC/spring-petclinic-2.7.3.jar
+#1
+$FC/jdk/bin/java -version

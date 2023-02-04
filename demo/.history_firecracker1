@@ -1,2 +1,3 @@
-firecracker --api-sock fc.sock --log-path fc.log
-touch fc.log
+sudo setfacl -m u:${USER}:rw /dev/kvm
+firecracker --api-sock fc.sock --log-path fc.log --level Info --boot-timer
+truncate -s 0 fc.log && rm -rf fc.sock

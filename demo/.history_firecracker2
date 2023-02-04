@@ -1,40 +1,49 @@
 #1
 curl --unix-socket fc.sock -i \
-    -X PUT "http://localhost/actions" \
-    -H  "accept: application/json" \
-    -H  "Content-Type: application/json" \
-    -d '{
-        "action_type": "InstanceStart"
-     }'
+       -X PUT "http://localhost/boot-source" \
+       -H "accept: application/json" \
+       -H "Content-Type: application/json" \
+       -d '{
+            "kernel_image_path": "'"$FC"'/vmlinux",
+            "boot_args": "console=ttyS0 reboot=k panic=1 pci=off i8042.noaux i8042.nomux i8042.nopnp i8042.dumbkbd tsc=reliable ipv6.disable=1 randomize_kstack_offset=n norandmaps mitigations=off init=/opt/tools/ro_init.sh init_script=/opt/tools/fc_log_timestamp 8250.nr_uarts=0"
+           }'
 #1
 curl --unix-socket fc.sock -i \
-    -X PUT "http://localhost/drives/rootfs" \
-    -H "accept: application/json" \
-    -H "Content-Type: application/json" \
-    -d '{
-        "drive_id": "rootfs",
-        "path_on_host": "'"$FC"'/rootfs_test.ext4",
-        "is_root_device": true,
-        "is_read_only": false
-    }'
+       -X PUT "http://localhost/actions" \
+       -H  "accept: application/json" \
+       -H  "Content-Type: application/json" \
+       -d '{
+            "action_type": "InstanceStart"
+           }'
 #1
 curl --unix-socket fc.sock -i \
-    -X PUT "http://localhost/boot-source" \
-    -H "accept: application/json" \
-    -H "Content-Type: application/json" \
-    -d '{
-        "kernel_image_path": "'"$FC"'/vmlinux",
-        "boot_args": "console=ttyS0 reboot=k panic=1 pci=off i8042.noaux i8042.nomux i8042.nopnp i8042.dumbkbd tsc=reliable ipv6.disable=1 randomize_kstack_offset=n norandmaps mitigations=off"
-    }'
+       -X PUT "http://localhost/drives/rootfs" \
+       -H "accept: application/json" \
+       -H "Content-Type: application/json" \
+       -d '{
+            "drive_id": "rootfs",
+            "path_on_host": "'"$FC"'/rootfs_test.ext4",
+            "is_root_device": true,
+            "is_read_only": false
+           }'
 #1
 curl --unix-socket fc.sock -i \
-     -X PUT "http://localhost/machine-config" \
-     -H "accept: application/json" \
-     -H "Content-Type: application/json" \
-     -d '{
-          "vcpu_count": 2,
-          "mem_size_mib" : 512
-         }'
+       -X PUT "http://localhost/boot-source" \
+       -H "accept: application/json" \
+       -H "Content-Type: application/json" \
+       -d '{
+            "kernel_image_path": "'"$FC"'/vmlinux",
+            "boot_args": "console=ttyS0 reboot=k panic=1 pci=off i8042.noaux i8042.nomux i8042.nopnp i8042.dumbkbd tsc=reliable ipv6.disable=1 randomize_kstack_offset=n norandmaps mitigations=off init=/opt/tools/ro_init.sh init_script=/bin/bash"
+           }'
+#1
+curl --unix-socket fc.sock -i \
+       -X PUT "http://localhost/machine-config" \
+       -H "accept: application/json" \
+       -H "Content-Type: application/json" \
+       -d '{
+            "vcpu_count": 2,
+            "mem_size_mib" : 512
+           }'
 #1
 du -sh $FC/rootfs_test.ext4
 #1
