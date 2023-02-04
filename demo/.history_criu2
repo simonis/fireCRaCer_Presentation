@@ -1,0 +1,5 @@
+#1
+sudo `which criu` restore --tcp-established --images-dir ./criu_snapshot --shell-job
+#1
+sudo `which criu` dump --tcp-established --tree `pgrep -f spring` \
+                    --images-dir ./criu_snapshot --shell-job --leave-running

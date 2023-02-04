@@ -392,7 +392,7 @@ mark.border-no-bottom {
     color: #eee8d5;
 }
 
-ul.before::before {
+ul.before::before, ol.before::before {
     content:attr(data-header);
     font-size:120%;
     font-weight:bold;
@@ -559,21 +559,108 @@ pre.after.small::after {
         <section data-background="images/background_default.jpg">
           <h1>Firecracker vs. Docker</h1>
 
+            <ul class="before" data-header="Firecracker" style="width: 60%;">
+              <li class="fragment" data-fragment-index="1">Full KVM virtualization</li>
+              <li class="fragment" data-fragment-index="2">VMs completely isolated (ballooning device)</li>
+              <li class="fragment" data-fragment-index="3">More secure</li>
+              <li class="fragment" data-fragment-index="4">
+                <a href="https://github.com/firecracker-microvm/firecracker/blob/main/docs/snapshotting/snapshot-support.md">Snapshot support</a>
+              </li>
+            </ul>
+
+            <ul class="before" data-header="Docker" style="width: 60%;">
+              <li class="fragment" data-fragment-index="1">cgroup/namespace isolation</li>
+              <li class="fragment" data-fragment-index="2">Sharing between containers (COW/page cache)</li>
+              <li class="fragment" data-fragment-index="3">Lightweight</li>
+              <li class="fragment" data-fragment-index="4">Checkpoint/Restore with <a href="https://criu.org/Docker">CRIU</a> </li>
+            </ul>
+
         </section>
 
         <section data-background="images/background_default.jpg">
           <h1>CRaC &amp; CRIU</h1>
 
-        </section>
-
-        <section data-background="images/background_last.jpg">
-          <h2 style="text-transform: none;">
-            CRaC &amp; CRIU DEMO
-          </h2>
+          <ol class="before" data-header="CRAC: Coordinated Restore at Checkpoint" style="width: 65%;">
+            <li class="fragment">Create a standard checkpoint/restore notification API</li>
+            <li class="fragment">Make the JDK "<em>snapsafe</em>":
+              <ul>
+                <li>i.e. act gracefully on checkpoint/restore &amp; <strong><em>clone</em></strong>events</li>
+                <li>state, secrets, resources, ...</li>
+              </ul>
+            </li>
+            <li class="fragment">Integrate with checkpoint/restore mechanisms:
+              <ul>
+                <li>Currently only CRIU</li>
+              </ul>
+            </li>
+          </ol>
+          <br/>
+          <br/>
+          <ul class="before fragment" data-header="CRIU: Checkpoint and Restore In Userspace" style="width: 65%;">
+            <li>Serializes single processes to the file system</li>
+          </ul>
         </section>
 
         <section data-background="images/background_default.jpg">
+
+          <h1 style="text-transform: none;">CRaC &amp; CRIU DEMO</h1>
+
+        </section>
+
+        <section data-background="images/background_default.jpg">
+
           <h1>FireCRaCer</h1>
+
+          <ul class="before" data-header="The Best Of Both Worlds :)">
+            <li class="fragment" data-fragment-index="1">Checkpointing plain/CRaC JDK with Firecracker:
+              <ul>
+                <li>No need to worry about file descriptors, network, shared memory,..</li>
+              </ul>
+            </li>
+            <li class="fragment" data-fragment-index="2">Can't checkpoint a Firecracker VM from within the guest:
+              <ul>
+                <li>Need host cooperation</li>
+              </ul>
+            </li>
+            <li class="fragment" data-fragment-index="3">Maximum security and speed</li>
+            <li class="fragment" data-fragment-index="3">No COW memory sharing (need <a href="https://github.com/firecracker-microvm/firecracker/blob/main/docs/ballooning.md">Balloning</a>/
+              <a href="https://docs.kernel.org/admin-guide/mm/ksm.html">Samepage Merging</a>)</li>
+          </ul>
+
+        </section>
+
+        <section data-background="images/background_default.jpg">
+
+          <h1 style="text-transform: none;">FireCRaCer DEMO</h1>
+
+        </section>
+
+        <section data-background="images/background_default.jpg">
+
+          <h1><code>userfaultfd</code></h1>
+
+          <ul>
+            <li class="fragment" data-fragment-index="1">Handling page faults in user space</li>
+            <li class="fragment" data-fragment-index="1">Faulting and fault-handling thread can be in different processes</li>
+            <li class="fragment" data-fragment-index="2">A process creates a <a href="https://man7.org/linux/man-pages/man2/userfaultfd.2.html">userfaultfd</a> object</li>
+            <li class="fragment" data-fragment-index="2">The userfaultfd object can be used (via <a href="https://man7.org/linux/man-pages/man2/ioctl_userfaultfd.2.html"><code>ioctl()</code></a>) to:
+              <ul>
+                <li>Registers memory ranges</li>
+                <li>Handle page faults</li>
+              </ul>
+            </li>
+            <li class="fragment" data-fragment-index="3">Useful for:
+              <ul>
+                <li>Virtual Machine live migration</li>
+                <li><a href="https://www.cons.org/cracauer/cracauer-userfaultfd.html">Implementing GCs</a> (faster than <code>mprotect()</code>/<code>SIGSEGV</code> handler)</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+
+        <section data-background="images/background_default.jpg">
+
+          <h1 style="text-transform: none;">FireCRaCer/<code>userfaultfd</code> &nbsp; DEMO</h1>
 
         </section>
 
@@ -583,12 +670,17 @@ pre.after.small::after {
           <ul>
             <li><a href="https://www.usenix.org/conference/nsdi20/presentation/agache">
                 Firecracker: Lightweight Virtualization for Serverless Applications</a></li>
-            <li><a href="https://github.com/firecracker-microvm/firecracker/blob/main/docs/design.md"></a>
-              Firecracker Design</li>
-            <li><a href="https://www.talhoffman.com/2021/07/18/firecracker-internals/"></a>
-              Firecracker internals: a deep dive inside the technology powering AWS Lambda</li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
+            <li><a href="https://github.com/firecracker-microvm/firecracker/blob/main/docs/design.md">
+              Firecracker Design</a></li>
+            <li><a href="https://www.talhoffman.com/2021/07/18/firecracker-internals/">
+              Firecracker internals: a deep dive inside the technology powering AWS Lambda</a></li>
+            <li><a href="https://github.com/firecracker-microvm/firecracker/blob/main/docs/snapshotting/snapshot-support.md">Firecracker snapshot support</a></li>
+            <li><a href="https://github.com/firecracker-microvm/firecracker/blob/main/docs/ballooning.md">Firecracker ballooning support</a></li>
+            <li><a href="https://wiki.openjdk.org/display/crac">OpenJDK Project: Coordinated Restore at Checkpoint</a></li>
+            <li><a href="https://criu.org/Docker">CRIU</a></li>
+            <li><a href="https://docs.kernel.org/admin-guide/mm/userfaultfd.html">Userfaultfd kernel documentation</a>
+            <li><a href="https://docs.kernel.org/admin-guide/mm/ksm.html">Kernel Samepage Merging (KSM)</a></li>
+            </li>
           </ul>
         </section>
 

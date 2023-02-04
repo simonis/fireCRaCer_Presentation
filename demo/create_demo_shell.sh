@@ -12,7 +12,7 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-export PATH=/priv/simonisv/Git/fireCRaCer:/share/software/Java/corretto-17/bin:$PATH
+export PATH=/priv/simonisv/Git/fireCRaCer:/share/software/Java/corretto-17/bin:/share/software/criu-3.17.1/criu/:$PATH
 # Need a new version of 'kill' which can pass integer value with the signal using sigqueue
 # See: https://gitlab.com/procps-ng/procps/-/merge_requests/32
 export PATH=/share/software/procps-master_bin/bin:$PATH
@@ -49,6 +49,15 @@ if [ "$1" == "firecracercmd" ]; then
 else
 if [ "$1" == "uffd" ]; then
 :
+else
+if [ "$1" == "criu1" ]; then
+  export CONSOLE_LOG_PATTERN="%clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"
+else
+if [ "$1" == "criu2" ]; then
+  DIR="criu1"
+  export CONSOLE_LOG_PATTERN="%clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"
+fi
+fi
 fi
 fi
 fi
@@ -58,13 +67,16 @@ fi
 fi
 fi
 
-if [ "$1" != "firecracker2" ]; then
+if [ "$1" != "firecracker2" -a "$1" != "criu2" ]; then
   rm -rf /tmp/_$DIR
 fi
 mkdir -p /tmp/_$DIR
 cd /tmp/_$DIR
-if [ "$1" != "firecracker2" ]; then
+if [ "$1" == "firecracker1" ]; then
   truncate -s 0 fc.log && rm -rf fc.sock
+fi
+if [ "$1" == "criu1" ]; then
+  mkdir ./criu_snapshot
 fi
 
 # See https://unix.stackexchange.com/questions/353386/when-is-a-multiline-history-entry-aka-lithist-in-bash-possible

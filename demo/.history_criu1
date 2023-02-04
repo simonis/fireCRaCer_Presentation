@@ -1,0 +1,4 @@
+#1
+curl -s -o /dev/null -L -w ''%{http_code}'\n' localhost:8080
+#1
+java -XX:+PerfDisableSharedMem -showversion -jar $FC/spring-petclinic-2.7.3.jar
