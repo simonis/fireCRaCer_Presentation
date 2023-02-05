@@ -3,9 +3,11 @@ pmap -x `pgrep -f api`
 #1
 telnet 172.16.0.2 1234
 #1
-ssh -i $FC/../docker/firecracker_id_rsa root@172.16.0.2 '/bin/kill -q 1 -SIGRTMIN+2 `pgrep -f spring`'
+ssh -i $FC/../docker/firecracker_id_rsa root@172.16.0.2 \
+      '/bin/kill -q 1 -SIGRTMIN+2 `pgrep -f spring`'
 #1
-ssh -i $FC/../docker/firecracker_id_rsa root@172.16.0.2 '/opt/jdk/bin/jcmd spring-petclinic JDK.checkpoint'
+ssh -i $FC/../docker/firecracker_id_rsa root@172.16.0.2 \
+      '/opt/jdk/bin/jcmd spring-petclinic JDK.checkpoint'
 #1
 fireCRaCer.sh -k -n 0
 #1

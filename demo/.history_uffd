@@ -10,6 +10,12 @@ fireCRaCer.sh -k
 java --enable-preview -DuffdVisualizer.scale=4 \
        -jar $FC/UffdVisualizer.jar mem_mapping.txt uffd.log nmt.log
 #1
+curl -s -o /dev/null -L -w ''%{http_code}'\n' 172.16.0.2:8080
+#1
+pmap -x `pgrep -f api`
+#1
+fireCRaCer.sh -s ./snapshot
+#1
 ssh -i $FC/../docker/firecracker_id_rsa root@172.16.0.2 \
       '/opt/tools/mem_mapping.sh' > mem_mapping.txt
 #1
