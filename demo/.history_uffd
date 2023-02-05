@@ -1,0 +1,17 @@
+#1
+java --enable-preview -DuffdVisualizer.scale=4 \
+       -jar $FC/UffdVisualizer.jar \
+       $FC/../data/default_drop_caches_compact_memory_THP_AppCDS/mem_mapping1.txt \
+       $FC/../data/default_drop_caches_compact_memory_THP_AppCDS/uffd.log \
+       $FC/../data/default_drop_caches_compact_memory_THP_AppCDS/nmt2.log
+#1
+fireCRaCer.sh -k
+#1
+java --enable-preview -DuffdVisualizer.scale=4 \
+       -jar $FC/UffdVisualizer.jar mem_mapping.txt uffd.log nmt.log
+#1
+ssh -i $FC/../docker/firecracker_id_rsa root@172.16.0.2 \
+      '/opt/tools/mem_mapping.sh' > mem_mapping.txt
+#1
+ssh -i $FC/../docker/firecracker_id_rsa root@172.16.0.2 \
+      '/opt/jdk/bin/jcmd spring-petclinic VM.native_memory detail' > nmt.log

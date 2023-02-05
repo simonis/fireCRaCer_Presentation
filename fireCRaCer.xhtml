@@ -580,12 +580,16 @@ pre.after.small::after {
         <section data-background="images/background_default.jpg">
           <h1>CRaC &amp; CRIU</h1>
 
-          <ol class="before" data-header="CRAC: Coordinated Restore at Checkpoint" style="width: 65%;">
-            <li class="fragment">Create a standard checkpoint/restore notification API</li>
+          <ol class="before" data-header="CRAC: Coordinated Restore at Checkpoint" style="width: 90%;">
+            <li class="fragment">Create a standard checkpoint/restore notification API
+              <ul>
+                <li><a href="https://github.com/CRaC/org.crac"><code>org.crac</code></a> wraps: <code>jdk.crac</code>, <code>javax.crac</code> &amp; <code>-Dorg.crac.Core.Compat</code></li>
+              </ul>
+            </li>
             <li class="fragment">Make the JDK "<em>snapsafe</em>":
               <ul>
-                <li>i.e. act gracefully on checkpoint/restore &amp; <strong><em>clone</em></strong>events</li>
-                <li>state, secrets, resources, ...</li>
+                <li>i.e. act gracefully on checkpoint/restore &amp; <strong><em>clone</em></strong> events</li>
+                <li>state, secrets, time, resources, ...</li>
               </ul>
             </li>
             <li class="fragment">Integrate with checkpoint/restore mechanisms:
@@ -596,7 +600,7 @@ pre.after.small::after {
           </ol>
           <br/>
           <br/>
-          <ul class="before fragment" data-header="CRIU: Checkpoint and Restore In Userspace" style="width: 65%;">
+          <ul class="before fragment" data-header="CRIU: Checkpoint and Restore In Userspace" style="width: 90%;">
             <li>Serializes single processes to the file system</li>
           </ul>
         </section>

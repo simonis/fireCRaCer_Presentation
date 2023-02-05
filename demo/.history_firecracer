@@ -1,0 +1,21 @@
+#1
+fireCRaCer.sh -r ./snapshot/ -u uffd.log
+#1
+BOOT_ARGS="sshd=true \
+           FC_JAVA_OPTIONS=\"-XX:NativeMemoryTracking=detail\"" \
+  fireCRaCer.sh
+#1
+BOOT_ARGS="sshd=true \
+           FC_JAVA_OPTIONS=\"-javaagent:/opt/jars/SuspendResumeAgent.jar \
+                             -Dorg.crac.Core.Compat=io.simonis.crac\"" \
+  fireCRaCer.sh
+#1
+BOOT_ARGS="sshd=true \
+           FC_JAVA_OPTIONS=\"-XX:CRaCCheckpointTo=crac \
+                             -XX:+UnlockExperimentalVMOptions -XX:-CRDoThrowCheckpointException \
+                             -XX:CREngine=/opt/jdk/lib/pauseengine\"" \
+  fireCRaCer.sh
+#1
+fireCRaCer.sh -r ./snapshot/
+#1
+fireCRaCer.sh

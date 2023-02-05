@@ -42,13 +42,13 @@ if [ "$1" == "firecracer" ]; then
 :
 else
 if [ "$1" == "firecracerclone" ]; then
-:
+  DIR="firecracer"
 else
 if [ "$1" == "firecracercmd" ]; then
-:
+  DIR="firecracer"
 else
 if [ "$1" == "uffd" ]; then
-:
+  DIR="firecracer"
 else
 if [ "$1" == "criu1" ]; then
   export CONSOLE_LOG_PATTERN="%clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"
@@ -67,7 +67,7 @@ fi
 fi
 fi
 
-if [ "$1" != "firecracker2" -a "$1" != "criu2" ]; then
+if [ "$1" != "firecracker2" -a "$1" != "criu2" -a "$1" != "firecracerclone" -a "$1" != "firecracercmd" -a "$1" != "uffd" ]; then
   rm -rf /tmp/_$DIR
 fi
 mkdir -p /tmp/_$DIR
