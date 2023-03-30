@@ -67,16 +67,15 @@ fi
 fi
 fi
 
-if [ "$1" != "firecracker2" -a "$1" != "criu2" -a "$1" != "firecracerclone" -a "$1" != "firecracercmd" -a "$1" != "uffd" ]; then
-  rm -rf /tmp/_$DIR
-fi
 mkdir -p /tmp/_$DIR
+# Delete on exit
+trap '{ rm -rf -- "/tmp/_$DIR"; }' EXIT
 cd /tmp/_$DIR
 if [ "$1" == "firecracker1" ]; then
   truncate -s 0 fc.log && rm -rf fc.sock
 fi
 if [ "$1" == "criu1" ]; then
-  mkdir ./criu_snapshot
+  mkdir -p ./criu_snapshot
 fi
 
 # See https://unix.stackexchange.com/questions/353386/when-is-a-multiline-history-entry-aka-lithist-in-bash-possible
