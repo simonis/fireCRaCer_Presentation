@@ -608,7 +608,7 @@ pre.after.small::after {
             <ol class="before" data-header="CRAC: Coordinated Restore at Checkpoint" style="width: 90%;">
               <li class="fragment">Create a standard checkpoint/restore notification API
                 <ul>
-                  <li><a href="https://github.com/CRaC/org.crac"><code>org.crac</code></a> wraps: <code>jdk.crac</code>, <code>javax.crac</code> or <code>-Dorg.crac.Core.Compat</code></li>
+                  <li>Use <a href="https://github.com/CRaC/org.crac"><code>org.crac</code></a> as a wrapper for:<br/> <code>jdk.crac</code> / <code>javax.crac</code> / <code>-Dorg.crac.Core.Compat=..</code></li>
                 </ul>
               </li>
               <li class="fragment">Make the JDK "<em>snapsafe</em>":
@@ -624,7 +624,6 @@ pre.after.small::after {
               </li>
             </ol>
             <br/>
-            <br/>
             <ul class="before fragment" data-header="CRIU: Checkpoint and Restore In Userspace" style="width: 90%;">
               <li>Serializes single processes to the file system</li>
             </ul>
@@ -635,7 +634,6 @@ pre.after.small::after {
             <h1 style="text-transform: none;">Using org.crac</h1>
 
             <ul style="list-style-type: none;">
-              <li>Injected with <code>-Dorg.crac.Core.Compat=io.simonis.crac</code></li>
               <li>
                 <pre class="noshadow" style="margin: 0; padding: 15px 0;" data-trim="true">
                   <code class="java" data-trim="true" data-noescape="true">
@@ -1099,7 +1097,9 @@ hljs.initHighlightingOnLoad(); } },
  -->
 <!--  LocalWords:  GZIP Gzip infgen FireCRaCer css lightyellow CRIU
  -->
-<!--  LocalWords:  snapsafe CRaC Checkpointing VM Samepage GCs AWS
+<!--  LocalWords:  snapsafe CRaC Checkpointing VM Samepage GCs AWS GC
  -->
-<!--  LocalWords:  userfaultfd Serverless KSM UffdVisualizer
+<!--  LocalWords:  userfaultfd Serverless KSM UffdVisualizer crac
+ -->
+<!--  LocalWords:  JVMTI checkpointing
  -->
