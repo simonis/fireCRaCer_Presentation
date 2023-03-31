@@ -600,32 +600,72 @@ pre.after.small::after {
 
         </section>
 
-        <section data-background="images/background_default.jpg">
-          <h1>CRaC &amp; CRIU</h1>
+        <section>
 
-          <ol class="before" data-header="CRAC: Coordinated Restore at Checkpoint" style="width: 90%;">
-            <li class="fragment">Create a standard checkpoint/restore notification API
-              <ul>
-                <li><a href="https://github.com/CRaC/org.crac"><code>org.crac</code></a> wraps: <code>jdk.crac</code>, <code>javax.crac</code> &amp; <code>-Dorg.crac.Core.Compat</code></li>
-              </ul>
-            </li>
-            <li class="fragment">Make the JDK "<em>snapsafe</em>":
-              <ul>
-                <li>i.e. act gracefully on checkpoint/restore &amp; <strong><em>clone</em></strong> events</li>
-                <li>state, secrets, time, resources, ...</li>
-              </ul>
-            </li>
-            <li class="fragment">Integrate with checkpoint/restore mechanisms:
-              <ul>
-                <li>Currently only CRIU</li>
-              </ul>
-            </li>
-          </ol>
-          <br/>
-          <br/>
-          <ul class="before fragment" data-header="CRIU: Checkpoint and Restore In Userspace" style="width: 90%;">
-            <li>Serializes single processes to the file system</li>
-          </ul>
+          <section data-background="images/background_default.jpg">
+            <h1>CRaC &amp; CRIU</h1>
+
+            <ol class="before" data-header="CRAC: Coordinated Restore at Checkpoint" style="width: 90%;">
+              <li class="fragment">Create a standard checkpoint/restore notification API
+                <ul>
+                  <li><a href="https://github.com/CRaC/org.crac"><code>org.crac</code></a> wraps: <code>jdk.crac</code>, <code>javax.crac</code> or <code>-Dorg.crac.Core.Compat</code></li>
+                </ul>
+              </li>
+              <li class="fragment">Make the JDK "<em>snapsafe</em>":
+                <ul>
+                  <li>i.e. act gracefully on checkpoint/restore &amp; <strong><em>clone</em></strong> events</li>
+                  <li>state, secrets, time, resources, ...</li>
+                </ul>
+              </li>
+              <li class="fragment">Integrate with checkpoint/restore mechanisms:
+                <ul>
+                  <li>Currently only CRIU</li>
+                </ul>
+              </li>
+            </ol>
+            <br/>
+            <br/>
+            <ul class="before fragment" data-header="CRIU: Checkpoint and Restore In Userspace" style="width: 90%;">
+              <li>Serializes single processes to the file system</li>
+            </ul>
+          </section>
+
+          <section data-background="images/background_default.jpg">
+
+            <h1 style="text-transform: none;">Using org.crac</h1>
+
+            <ul style="list-style-type: none;">
+              <li>Injected with <code>-Dorg.crac.Core.Compat=io.simonis.crac</code></li>
+              <li>
+                <pre class="noshadow" style="margin: 0; padding: 15px 0;" data-trim="true">
+                  <code class="java" data-trim="true" data-noescape="true">
+import org.crac.Context;
+import org.crac.Core;
+import <span class="fragment highlight-current-border" data-fragment-index="1">org.crac.Resource</span>;
+
+@Component
+public class MyCheckpointRestoreListener implements <span class="fragment highlight-current-border" data-fragment-index="1">Resource</span> {
+
+  @Autowired
+  public MyCheckpointRestoreListener(...) {
+    <span class="fragment highlight-current-border" data-fragment-index="2">Core.getGlobalContext().register(this)</span>;
+    logger.info("=&gt; MyCheckpointRestoreListener: Registering in {}", Core.getGlobalContext());
+  }
+  @Override
+  public void <span class="fragment highlight-current-border" data-fragment-index="3">beforeCheckpoint</span>(Context&lt;? extends Resource&gt; context) {
+    <span class="fragment highlight-current-border" data-fragment-index="4">logger.info("=&gt; MyCheckpointRestoreListener: beforeCheckpoint")</span>;
+  }
+  @Override
+  public void <span class="fragment highlight-current-border" data-fragment-index="3">afterRestore</span>(Context&lt;? extends Resource&gt; context) {
+    <span class="fragment highlight-current-border" data-fragment-index="4">logger.info("=&gt; MyCheckpointRestoreListener: afterRestore")</span>;
+  }
+}
+                  </code>
+                </pre>
+              </li>
+            </ul>
+          </section>
+
         </section>
 
         <section data-background="images/background_default.jpg">
@@ -661,17 +701,111 @@ pre.after.small::after {
           <h1 style="text-transform: none;">FireCRaCer DEMO</h1>
 
           <ol>
-            <li class="fragment">"<em>Unattended</em>" checkpoint/restore with unmodified JDK<br/>&nbsp;</li>
-            <li class="fragment">Using a "<em>CRaC</em>"-enhanced JDK inside Firecracker<br/>&nbsp;</li>
-            <li class="fragment">Using a "<em>JVMTI-agent</em>" implementing the <code>org.crac</code> API</li>
+            <li>"<em>Unattended</em>" checkpoint/restore with unmodified JDK<br/>&nbsp;</li>
+            <li style="visibility: hidden;">Using a "<em>CRaC</em>"-enhanced JDK inside Firecracker<br/>&nbsp;</li>
+            <li style="visibility: hidden;">Using a "<em>JVMTI-agent</em>" implementing the <code>org.crac</code> API</li>
           </ol>
 
         </section>
 
         <section data-background="images/background_default.jpg">
 
-          <h1 style="text-transform: none;">Java-agent implementing org.crac</h1>
+          <h1 style="text-transform: none;">FireCRaCer DEMO</h1>
 
+          <ol>
+            <li>"<em>Unattended</em>" checkpoint/restore with unmodified JDK<br/>&nbsp;</li>
+            <li>Using a "<em>CRaC</em>"-enhanced JDK inside Firecracker<br/>&nbsp;</li>
+            <li style="visibility: hidden;">Using a "<em>JVMTI-agent</em>" implementing the <code>org.crac</code> API</li>
+          </ol>
+
+        </section>
+
+        <section>
+
+          <section data-background="images/background_default.jpg">
+
+            <h1 style="text-transform: none;">FireCRaCer DEMO</h1>
+
+            <ol>
+              <li>"<em>Unattended</em>" checkpoint/restore with unmodified JDK<br/>&nbsp;</li>
+              <li>Using a "<em>CRaC</em>"-enhanced JDK inside Firecracker<br/>&nbsp;</li>
+              <li>Using a "<em>JVMTI-agent</em>" implementing the <code>org.crac</code> API</li>
+            </ol>
+
+          </section>
+
+          <section data-background="images/background_default.jpg">
+
+            <h1 style="text-transform: none;">Java-agent implementing org.crac</h1>
+
+            <ul style="list-style-type: none;">
+              <li>Injected with <code>-Dorg.crac.Core.Compat=io.simonis.crac</code></li>
+              <li>
+                <pre class="noshadow" style="margin: 0; padding: 15px 0;" data-trim="true">
+                  <code class="java" data-trim="true" data-noescape="true">
+package io.simonis.crac.impl;
+
+public class FirecrackerContext extends Context&lt;Resource&gt; {
+
+  private final ArrayList&lt;WeakReference&lt;Resource&gt;&gt; resources = new ArrayList&lt;&gt;();
+
+  @Override
+  public void register(Resource resource) {
+    resources.add(new WeakReference&lt;Resource&gt;(resource));
+  }
+
+  @Override
+  public void beforeCheckpoint(Context&lt;? extends Resource&gt; context) throws CheckpointException {
+    for (var iterator = resources.listIterator(resources.size()); iterator.hasPrevious();) {
+      Resource r = iterator.previous().get();
+      r.beforeCheckpoint(this);
+      ...
+  @Override
+  public void afterRestore(Context&lt;? extends Resource&gt; context) throws RestoreException {
+    for (var iterator = resources.listIterator(); iterator.hasNext();) {
+      ...
+                  </code>
+                </pre>
+              </li>
+            </ul>
+          </section>
+
+          <section data-background="images/background_default.jpg">
+
+            <h1 style="text-transform: none;">JVMTI-agent controlling threads and GC</h1>
+
+            <ul style="list-style-type: none;">
+              <li>Use JVMTI to suspend/resume threads before/after checkpointing:</li>
+              <li>
+                <pre class="noshadow" style="margin: 0; padding: 15px 0;" data-trim="true">
+                  <code class="cpp" data-trim="true" data-noescape="true">
+jint Java_io_simonis_SuspendResumeAgent_suspendThreads(JNIEnv *env, jclass cls) {
+  jint threads_count;
+  jthread *threads;
+  jvmti-&gt;GetAllThreads(&amp;threads_count, &amp;threads);
+  ...
+  jvmtiError error = jvmti-&gt;SuspendThreadList(threads_count - 1, threads, errors);
+
+jint Java_io_simonis_SuspendResumeAgent_resumeThreads(JNIEnv *env, jclass cls) {
+  jint threads_count;
+  jthread *threads;
+  jvmti-&gt;GetAllThreads(&amp;threads_count, &amp;threads);
+  ...
+  jvmtiError error = jvmti-&gt;ResumeThreadList(threads_count, threads, errors);
+                  </code>
+                </pre>
+              </li>
+              <li>Use JVMTI to perform a full GC before checkpointing:</li>
+              <li>
+                <pre class="noshadow" style="margin: 0; padding: 15px 0;" data-trim="true">
+                  <code class="cpp" data-trim="true" data-noescape="true">
+jint Java_io_simonis_SuspendResumeAgent_forceGC(JNIEnv *env, jclass cls) {
+  jvmtiError error = jvmti->ForceGarbageCollection();
+                  </code>
+                </pre>
+              </li>
+            </ul>
+          </section>
 
         </section>
 
